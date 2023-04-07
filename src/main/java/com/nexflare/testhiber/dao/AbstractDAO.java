@@ -1,5 +1,6 @@
 package com.nexflare.testhiber.dao;
 
+import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.pojo.AbstractDO;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class AbstractDAO<K> implements IDataRetrieval<K>{
+public abstract class AbstractDAO<K extends AbstractDO, T> implements IDataRetrieval<K, T>{
 
     private static final Logger log = Logger.getAnonymousLogger();
     private static final ThreadLocal<Session> sessionThread = new ThreadLocal<>();
@@ -52,12 +53,12 @@ public abstract class AbstractDAO<K> implements IDataRetrieval<K>{
         AbstractDAO.sessionThread.set(null);
     }
     @Override
-    public K get(K obj) {
+    public K get(T id) throws DataNotFoundException {
         return null;
     }
 
     @Override
-    public List<K> getAll() {
+    public List<K> getAll() throws DataNotFoundException {
         return null;
     }
 

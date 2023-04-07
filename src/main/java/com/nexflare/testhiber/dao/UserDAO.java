@@ -1,17 +1,26 @@
 package com.nexflare.testhiber.dao;
 
+import com.nexflare.testhiber.exceptions.DataNotFoundException;
+import com.nexflare.testhiber.pojo.Blog;
 import com.nexflare.testhiber.pojo.User;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
-public class UserDAO extends AbstractDAO<User>{
+public class UserDAO extends AbstractDAO<User, UUID>{
     @Override
-    public User get(User obj) {
-        return super.get(obj);
+    public User get(UUID id) throws DataNotFoundException {
+
+            begin();
+            Query q = getSession().createQuery("from User where id = :id ");
+            q.setParameter("id", id);
+            User user =(User) q.uniqueResult();
+            commit();
+            if(user == null) throw new DataNotFoundException("User not found");
+            return user;
+
     }
 
     @Override
@@ -35,9 +44,9 @@ public class UserDAO extends AbstractDAO<User>{
                 return list;
             }
             case "firstName" -> {
-                String statement = "from User where firstName = :firstName";
+                String statement = "from User where firstName = :firstname";
                 query = getSession().createQuery(statement, User.class);
-                query.setParameter("name", value);
+                query.setParameter("firstname", value);
                 List<User> list = query.getResultList();
 //                commit();
                 return list;
