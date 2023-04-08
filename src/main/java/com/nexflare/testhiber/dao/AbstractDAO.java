@@ -67,7 +67,6 @@ public abstract class AbstractDAO<K extends AbstractDO, T> implements IDataRetri
     @Override
     public void update(K obj) {
         try {
-            //save category to the database
             begin();
             getSession().merge(obj);
             commit();
@@ -101,7 +100,7 @@ public abstract class AbstractDAO<K extends AbstractDO, T> implements IDataRetri
         try {
             //save category to the database
             begin();
-            getSession().save(obj);
+            Object savedObject = getSession().save(obj);
             commit();
             close();
         } catch (HibernateException e) {
