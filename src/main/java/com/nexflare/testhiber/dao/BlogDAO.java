@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Component
@@ -33,5 +34,12 @@ public class BlogDAO extends AbstractDAO<Blog, UUID>{
     @Override
     public List<Blog> getElementByQuery(String property, String value) {
         return null;
+    }
+
+    @Override
+    public Blog getUniqueElementByQuery(Map<String, Object> map) {
+        Query q = getQuery("Blog", map);
+        Blog blog = (Blog) q.getSingleResult();
+        return blog;
     }
 }

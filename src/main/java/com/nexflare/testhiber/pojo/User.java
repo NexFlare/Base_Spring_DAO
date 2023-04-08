@@ -3,8 +3,7 @@ package com.nexflare.testhiber.pojo;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,10 +12,13 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User extends AbstractDO{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @Column(name ="firstname")
     private String firstName;
@@ -29,6 +31,4 @@ public class User extends AbstractDO{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Blog> blogs;
 
-
-    public User(){}
 }

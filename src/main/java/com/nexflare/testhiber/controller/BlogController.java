@@ -14,7 +14,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/blog")
 public class BlogController {
 
-    AbstractDAO<Blog, UUID> blogDao;
+    private AbstractDAO<Blog, UUID> blogDao;
 
     @Autowired
     public BlogController(AbstractDAO<Blog, UUID> blogDao) {
@@ -31,12 +31,8 @@ public class BlogController {
     }
 
     @GetMapping("/{id}")
-    public User getUserDetail(@PathVariable UUID id) {
+    public Blog getUserDetail(@PathVariable UUID id) {
         Blog blog = this.blogDao.get(id);
-        if(blog!=null) {
-            User user = blog.getUser();
-            return user;
-        }
-        return null;
+        return blog;
     }
 }

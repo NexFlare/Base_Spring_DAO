@@ -6,8 +6,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -112,4 +114,20 @@ public abstract class AbstractDAO<K extends AbstractDO, T> implements IDataRetri
     }
 
     public abstract List<K> getElementByQuery(String property, String value);
+
+    public abstract K getUniqueElementByQuery(Map<String, Object> map);
+
+    protected Query getQuery(String tableName, Map<String, Object> map) {
+        StringBuilder sb = new StringBuilder("from "  + tableName + " where ");
+        for(String key : map.keySet()) {
+            sb.append(key);
+            sb.append(" = :");
+            sb.append(key);
+        }
+        Query q = getSession().createQuery(sb.toString());
+        for(Map.Entry<String, Object> set : map.entrySet()) {
+            q.setParameter(set.getKey(), set.getValue());
+        }
+        return q;
+    }
 }

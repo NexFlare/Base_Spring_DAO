@@ -5,14 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nexflare.testhiber.enums.BlogType;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Blog extends AbstractDO{
 
     @Id
@@ -32,6 +35,9 @@ public class Blog extends AbstractDO{
     @JsonBackReference
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "blog")
+    private List<Likes> likes;
 
 
 }
