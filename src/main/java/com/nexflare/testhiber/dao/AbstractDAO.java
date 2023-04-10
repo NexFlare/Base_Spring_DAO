@@ -100,7 +100,7 @@ public abstract class AbstractDAO<K extends AbstractDO, T> implements IDataRetri
         try {
             //save category to the database
             begin();
-            Object savedObject = getSession().save(obj);
+            getSession().save(obj);
             commit();
             close();
         } catch (HibernateException e) {

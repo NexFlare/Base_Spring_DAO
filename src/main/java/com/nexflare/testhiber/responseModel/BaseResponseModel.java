@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class BaseResponseModel<K> {
+public class BaseResponseModel<K> extends Response{
     K response;
     int code;
     String errorMessage;

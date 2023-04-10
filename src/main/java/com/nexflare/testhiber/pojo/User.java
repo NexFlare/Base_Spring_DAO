@@ -3,6 +3,8 @@ package com.nexflare.testhiber.pojo;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.List;
@@ -21,10 +23,16 @@ public class User extends AbstractDO{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @Column(name ="firstname")
+    @NotBlank(message = "Required Field Missing")
     private String firstName;
     @Column(name="lastname")
+    @NotBlank(message = "Required Field Missing")
     private String lastName;
+    @Email
+    @NotBlank(message = "Required Field Missing")
     private String email;
+    @Column(nullable = false)
+    @NotBlank(message = "Required Field Missing")
     private String password;
 
     @JsonManagedReference

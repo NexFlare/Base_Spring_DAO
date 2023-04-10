@@ -3,7 +3,7 @@ package com.nexflare.testhiber.exceptions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DataNotFoundException extends RuntimeException{
+public class DataNotFoundException extends AbstractException{
 
     private final Logger log = Logger.getAnonymousLogger();
     public DataNotFoundException(String errorMessage, Throwable error) {

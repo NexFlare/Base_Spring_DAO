@@ -1,9 +1,11 @@
 package com.nexflare.testhiber.controller;
 
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dao.BlogDAO;
 import com.nexflare.testhiber.pojo.Blog;
-import com.nexflare.testhiber.pojo.User;
+import com.nexflare.testhiber.requestModel.Blog.CreateBlogRequestObject;
+import com.nexflare.testhiber.responseModel.Response;
+import com.nexflare.testhiber.service.Blog.CreateBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,25 +16,27 @@ import java.util.UUID;
 @RequestMapping("/api/v1/blog")
 public class BlogController {
 
-    private AbstractDAO<Blog, UUID> blogDao;
+//    private AbstractDAO<Blog, UUID> blogDao;
+
+    private CreateBlogService createBlogService;
 
     @Autowired
-    public BlogController(AbstractDAO<Blog, UUID> blogDao) {
-        this.blogDao = blogDao;
+    public BlogController(CreateBlogService createBlogService) {
+        this.createBlogService = createBlogService;
     }
     @GetMapping("/")
-    public List<Blog> getBlogs() {
-        return this.blogDao.getAll();
+    public List<Blog> getBlogs(BlogDAO blogDao) {
+        return blogDao.getAll();
     }
 
     @PostMapping("/")
-    public void addBlog(@RequestBody Blog blog) {
-       this.blogDao.add(blog);
+    public Response addBlog(@RequestBody CreateBlogRequestObject blog) {
+        return createBlogService.handle(blog);
     }
 
     @GetMapping("/{id}")
-    public Blog getUserDetail(@PathVariable UUID id) {
-        Blog blog = this.blogDao.get(id);
+    public Blog getUserDetail(@PathVariable UUID id, BlogDAO blogDao) {
+        Blog blog = blogDao.get(id);
         return blog;
     }
 }

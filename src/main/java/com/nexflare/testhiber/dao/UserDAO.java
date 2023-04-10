@@ -1,14 +1,16 @@
 package com.nexflare.testhiber.dao;
 
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
+import com.nexflare.testhiber.pojo.Likes;
 import com.nexflare.testhiber.pojo.User;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Component
+@Component("UserDAO")
 public class UserDAO extends AbstractDAO<User, UUID>{
     @Override
     public User get(UUID id) throws DataNotFoundException {
@@ -56,7 +58,16 @@ public class UserDAO extends AbstractDAO<User, UUID>{
     }
 
     @Override
-    public User getUniqueElementByQuery(Map<String, Object> map) {
-        return null;
+    public User getUniqueElementByQuery(Map<String, Object> map) throws DataNotFoundException {
+        Query query = this.getQuery("User", map);
+        try{
+            User user = (User) query.getSingleResult();
+            return user;
+        } catch(NoResultException exception) {
+            throw new DataNotFoundException(exception.getMessage());
+        }
+
     }
+
+
 }

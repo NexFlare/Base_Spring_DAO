@@ -1,9 +1,13 @@
 package com.nexflare.testhiber.controller;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dao.UserDAO;
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.pojo.User;
+import com.nexflare.testhiber.requestModel.User.CreateNewUserRequestObject;
 import com.nexflare.testhiber.responseModel.BaseResponseModel;
+import com.nexflare.testhiber.responseModel.Response;
+import com.nexflare.testhiber.service.BaseHandler;
+import com.nexflare.testhiber.service.User.CreateUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,22 +18,22 @@ import java.util.UUID;
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    private AbstractDAO<User, UUID> dao;
+    BaseHandler<CreateNewUserRequestObject> createNewUserService;
 
     @Autowired
-    public UserController(AbstractDAO<User, UUID> dao) {
-        this.dao = dao;
+    public UserController(BaseHandler<CreateNewUserRequestObject> createNewUserService) {
+        this.createNewUserService = createNewUserService;
     }
 
     @GetMapping("/")
-    public List<User> getUsers() {
+    public List<User> getUsers(UserDAO dao) {
         return dao.getAll();
     }
 
     @GetMapping("/{id}")
-    public User getUserDetail(@PathVariable UUID id) {
+    public User getUserDetail(@PathVariable UUID id, UserDAO dao) {
         try{
-            User user = this.dao.get(id);
+            User user = dao.get(id);
             return user;
         } catch (DataNotFoundException exception) {
             return null;
@@ -37,13 +41,8 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public BaseResponseModel<User> addUser(@RequestBody User user) {
-        List<User> userList = this.dao.getElementByQuery("email", user.getEmail());
-        if(userList != null && userList.size() != 0) {
-            throw new Error("User already exist");
-        }
-        this.dao.add(user);
-        return BaseResponseModel.<User>builder().response(user).build();
+    public Response addUser(@RequestBody CreateNewUserRequestObject user) {
+        return createNewUserService.handle(user);
     }
 
 }
