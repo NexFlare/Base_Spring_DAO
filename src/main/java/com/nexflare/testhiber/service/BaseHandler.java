@@ -20,9 +20,9 @@ import java.util.UUID;
 @Setter
 public abstract class BaseHandler<T extends AbstractRequestObject> {
 
-    AbstractDAO<User, UUID> userDao;
+    protected AbstractDAO<User, UUID> userDao;
 
-    HttpServletRequest request;
+    protected HttpServletRequest request;
     public BaseHandler(AbstractDAO<User, UUID> userDao, HttpServletRequest request) {
         this.request = request;
         this.userDao = userDao;

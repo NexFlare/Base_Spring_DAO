@@ -18,10 +18,15 @@ public class UserDAO extends AbstractDAO<User, UUID>{
             begin();
             Query q = getSession().createQuery("from User where id = :id ");
             q.setParameter("id", id);
-            User user =(User) q.getSingleResult();
-            commit();
-            if(user == null) throw new DataNotFoundException("User not found");
-            return user;
+            try{
+                User user =(User) q.getSingleResult();
+                commit();
+                if(user == null) throw new DataNotFoundException("User not found");
+                return user;
+            } catch(NoResultException e) {
+                throw new DataNotFoundException("User not found");
+            }
+
 
     }
 

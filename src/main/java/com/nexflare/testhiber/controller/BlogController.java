@@ -5,6 +5,7 @@ import com.nexflare.testhiber.dao.BlogDAO;
 import com.nexflare.testhiber.pojo.Blog;
 import com.nexflare.testhiber.requestModel.Blog.CreateBlogRequestObject;
 import com.nexflare.testhiber.responseModel.Response;
+import com.nexflare.testhiber.service.BaseHandler;
 import com.nexflare.testhiber.service.Blog.CreateBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,10 @@ public class BlogController {
 
 //    private AbstractDAO<Blog, UUID> blogDao;
 
-    private CreateBlogService createBlogService;
+    private BaseHandler<CreateBlogRequestObject> createBlogService;
 
     @Autowired
-    public BlogController(CreateBlogService createBlogService) {
+    public BlogController(BaseHandler<CreateBlogRequestObject> createBlogService) {
         this.createBlogService = createBlogService;
     }
     @GetMapping("/")
