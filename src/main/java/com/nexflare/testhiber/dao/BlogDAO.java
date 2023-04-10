@@ -3,6 +3,7 @@ package com.nexflare.testhiber.dao;
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.pojo.Blog;
 import com.nexflare.testhiber.pojo.User;
+import jakarta.persistence.NoResultException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +19,14 @@ public class BlogDAO extends AbstractDAO<Blog, UUID>{
         begin();
         Query q = getSession().createQuery("from Blog where blogId = :id ");
         q.setParameter("id", id);
-        Blog blog =(Blog) q.uniqueResult();
-        commit();
-        return blog;
+        try{
+            Blog blog =(Blog) q.getSingleResult();
+            commit();
+            return blog;
+        } catch (NoResultException exp) {
+            throw new DataNotFoundException("No result found");
+        }
+
     }
 
     @Override

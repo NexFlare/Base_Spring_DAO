@@ -118,10 +118,15 @@ public abstract class AbstractDAO<K extends AbstractDO, T> implements IDataRetri
 
     protected Query getQuery(String tableName, Map<String, Object> map) {
         StringBuilder sb = new StringBuilder("from "  + tableName + " where ");
+        int iteration = 0;
         for(String key : map.keySet()) {
+            if(iteration != 0) {
+                sb.append(" AND ");
+            }
             sb.append(key);
             sb.append(" = :");
             sb.append(key);
+            iteration++;
         }
         Query q = getSession().createQuery(sb.toString());
         for(Map.Entry<String, Object> set : map.entrySet()) {

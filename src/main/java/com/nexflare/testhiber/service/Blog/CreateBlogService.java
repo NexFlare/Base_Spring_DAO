@@ -34,6 +34,10 @@ public class CreateBlogService extends BaseHandler<CreateBlogRequestObject> {
     protected Response handleRequest(CreateBlogRequestObject object) {
         Blog blog = this.mapper.map(object);
         if(validateIsUserLoggedIn()) {
+            User userObj = (User) this.getRequest().getSession().getAttribute("USER_OBJECT");
+            if(object.getUser().getId() == null || !userObj.getId().equals(object.getUser().getId())){
+                return BaseResponseModel.<Blog>builder().errorMessage("User not authorized").code(401).build();
+            }
             this.blogDao.add(blog);
             return BaseResponseModel.<Blog>builder().response(blog).build();
         } else {
