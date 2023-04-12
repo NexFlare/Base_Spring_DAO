@@ -12,6 +12,6 @@ public class LikesRequestToLikeDOMapper implements IRequestToDOMapper<AddLikeReq
     public Likes map(AddLikeRequestObject obj) {
         User user = User.builder().id(obj.getUserId()).build();
         Blog blog = Blog.builder().blogId(obj.getBlogId()).build();
-        return Likes.builder().blog(blog).build();
+        return Likes.builder().blog(blog).user(user).build();
     }
 }

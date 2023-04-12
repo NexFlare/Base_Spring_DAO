@@ -2,8 +2,7 @@ package com.nexflare.testhiber.pojo;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -12,16 +11,20 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class Comments {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Comments extends AbstractDO{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String comment;
     //Foreign Key
     @ManyToOne
-    private Blog blogid;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid")
+    @JoinColumn(name="blogid", referencedColumnName = "blogid")
+    private Blog blog;
+    @ManyToOne
+    @JoinColumn(name = "userid", referencedColumnName = "id")
     private User user;
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -17,11 +17,12 @@ public class Likes extends AbstractDO{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID likeId;
 
-//    @ManyToOne
-//    @JoinColumn(name="user", referencedColumnName = "id")
-//    private User user;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="user", referencedColumnName = "id")
+    private User user;
 
     @JsonIgnore
     @ManyToOne

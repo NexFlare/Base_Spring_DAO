@@ -2,7 +2,6 @@ package com.nexflare.testhiber.dao;
 
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.pojo.Blog;
-import com.nexflare.testhiber.pojo.User;
 import jakarta.persistence.NoResultException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;

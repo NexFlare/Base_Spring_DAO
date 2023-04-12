@@ -14,7 +14,6 @@ import java.util.UUID;
 public class UserDAO extends AbstractDAO<User, UUID>{
     @Override
     public User get(UUID id) throws DataNotFoundException {
-
             begin();
             Query q = getSession().createQuery("from User where id = :id ");
             q.setParameter("id", id);
@@ -26,8 +25,6 @@ public class UserDAO extends AbstractDAO<User, UUID>{
             } catch(NoResultException e) {
                 throw new DataNotFoundException("User not found");
             }
-
-
     }
 
     @Override

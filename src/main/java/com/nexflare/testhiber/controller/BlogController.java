@@ -36,20 +36,15 @@ public class BlogController {
         this.createBlogService = createBlogService;
         this.getBlogService = getBlogService;
     }
-    @GetMapping("/")
-    public List<Blog> getBlogs(BlogDAO blogDao) {
-        return blogDao.getAll();
-    }
 
     @PostMapping("/")
     public Response addBlog(@RequestBody CreateBlogRequestObject blog) {
         return createBlogService.handle(blog);
     }
 
-    @GetMapping("/{id}")
-    public Response getBlogDetail(@RequestParam(required = false) UUID blogId, @RequestParam(required = false)BlogType type, @RequestParam String location) {
+    @GetMapping("/")
+    public Response getBlogDetail(@RequestParam(required = false) UUID blogId, @RequestParam(required = false)BlogType type, @RequestParam(required = false) String location) {
         GetBlogRequestObject requestObject = GetBlogRequestObject.builder().type(type).blogId(blogId).location(location).build();
-        GetByIdRequestObject obj = new GetByIdRequestObject(blogId);
         return this.getBlogService.handle(requestObject);
     }
 }
