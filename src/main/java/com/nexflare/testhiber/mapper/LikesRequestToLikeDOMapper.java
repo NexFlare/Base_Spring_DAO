@@ -4,9 +4,11 @@ import com.nexflare.testhiber.pojo.Blog;
 import com.nexflare.testhiber.pojo.Likes;
 import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.AddLikeRequestObject;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@NoArgsConstructor
 public class LikesRequestToLikeDOMapper implements IRequestToDOMapper<AddLikeRequestObject, Likes>{
     @Override
     public Likes map(AddLikeRequestObject obj) {

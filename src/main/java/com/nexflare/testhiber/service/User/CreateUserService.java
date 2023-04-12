@@ -11,11 +11,9 @@ import com.nexflare.testhiber.responseModel.BaseResponseModel;
 import com.nexflare.testhiber.responseModel.Response;
 import com.nexflare.testhiber.service.BaseHandler;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,8 +21,6 @@ import java.util.UUID;
 public class CreateUserService extends BaseHandler<CreateNewUserRequestObject> {
 
     IRequestToDOMapper<CreateNewUserRequestObject, User> mapper;
-
-    @Autowired
     public CreateUserService(AbstractDAO<User, UUID> userDao, HttpServletRequest request, IRequestToDOMapper<CreateNewUserRequestObject, User> mapper) {
         super(userDao, request);
         this.mapper = mapper;

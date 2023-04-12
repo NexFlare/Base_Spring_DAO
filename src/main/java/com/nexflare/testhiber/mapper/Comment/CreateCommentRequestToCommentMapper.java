@@ -5,11 +5,13 @@ import com.nexflare.testhiber.pojo.Blog;
 import com.nexflare.testhiber.pojo.Comments;
 import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.Comment.CreateCommentRequestObject;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
+@NoArgsConstructor
 public class CreateCommentRequestToCommentMapper implements IRequestToDOMapper<CreateCommentRequestObject, Comments> {
     @Override
     public Comments map(CreateCommentRequestObject obj) {

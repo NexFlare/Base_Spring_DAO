@@ -8,7 +8,7 @@ import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.Blog.GetBlogRequestObject;
 import com.nexflare.testhiber.responseModel.BaseResponseModel;
 import com.nexflare.testhiber.responseModel.Response;
-import com.nexflare.testhiber.service.BaseHandler;
+import com.nexflare.testhiber.service.AuthenticatedBaseHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class GetBlogService extends BaseHandler<GetBlogRequestObject> {
+public class GetBlogService extends AuthenticatedBaseHandler<GetBlogRequestObject> {
 
     AbstractDAO<Blog, UUID> blogDao;
 

@@ -5,7 +5,6 @@ import com.nexflare.testhiber.pojo.Blog;
 import jakarta.persistence.NoResultException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
