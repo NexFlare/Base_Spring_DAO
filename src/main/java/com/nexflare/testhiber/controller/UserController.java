@@ -7,6 +7,7 @@ import com.nexflare.testhiber.requestModel.GetByIdRequestObject;
 import com.nexflare.testhiber.requestModel.User.GetUserRequestObject;
 import com.nexflare.testhiber.responseModel.Response;
 import com.nexflare.testhiber.service.BaseHandler;
+import com.nexflare.testhiber.service.User.CreateUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +53,10 @@ public class UserController {
     public Response addUser(@RequestBody CreateNewUserRequestObject user) {
         return createNewUserService.handle(user);
     }
+
+//    @PostMapping("/")
+//    public Response addUser(@RequestBody CreateNewUserRequestObject user, CreateUserService createNewUserService) {
+//        return createNewUserService.handle(user);
+//    }
 
 }

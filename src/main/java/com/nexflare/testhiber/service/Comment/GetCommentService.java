@@ -7,14 +7,14 @@ import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.GetByIdRequestObject;
 import com.nexflare.testhiber.responseModel.BaseResponseModel;
 import com.nexflare.testhiber.responseModel.Response;
-import com.nexflare.testhiber.service.BaseHandler;
+import com.nexflare.testhiber.service.AuthenticatedBaseHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service("GetCommentService")
-public class GetCommentService extends BaseHandler<GetByIdRequestObject> {
+public class GetCommentService extends AuthenticatedBaseHandler<GetByIdRequestObject> {
 
     AbstractDAO<Comments, UUID> commentDAO;
     public GetCommentService(AbstractDAO<User, UUID> userDao, HttpServletRequest request, AbstractDAO<Comments, UUID> commentDAO) {
