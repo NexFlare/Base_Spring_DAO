@@ -35,7 +35,7 @@ public class LoginService extends BaseHandler<GetUserRequestObject> {
             user = this.userDao.getUniqueElementByQuery(map);
             HttpSession session = this.getRequest().getSession(true);
             session.setAttribute("USER_OBJECT", user);
-            return BaseResponseModel.<User>builder().code(200).build();
+            return BaseResponseModel.<User>builder().response(user).code(200).build();
         } catch(DataNotFoundException e) {
             return BaseResponseModel.<User>builder().code(400).build();
         }
