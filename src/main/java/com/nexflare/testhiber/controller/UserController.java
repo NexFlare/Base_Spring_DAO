@@ -3,11 +3,14 @@ package com.nexflare.testhiber.controller;
 import com.nexflare.testhiber.dao.UserDAO;
 import com.nexflare.testhiber.mapper.User.CreateUserRequestToUserMapper;
 import com.nexflare.testhiber.mapper.User.GetUserRequestToUserMapper;
+import com.nexflare.testhiber.mapper.User.UserDOToUserResponseMapper;
 import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.User.CreateNewUserRequestObject;
 import com.nexflare.testhiber.requestModel.GetByIdRequestObject;
+import com.nexflare.testhiber.requestModel.User.ForgotPasswordRequestObject;
 import com.nexflare.testhiber.requestModel.User.GetUserRequestObject;
 import com.nexflare.testhiber.responseModel.Response;
+import com.nexflare.testhiber.service.Authentication.ForgotPasswordService;
 import com.nexflare.testhiber.service.Authentication.LoginService;
 import com.nexflare.testhiber.service.BaseHandler;
 import com.nexflare.testhiber.service.User.CreateUserService;
@@ -46,6 +49,12 @@ public class UserController {
         BaseHandler<GetByIdRequestObject> getUserService = new GetUserByIDService(userDAO, request);
         System.out.println(System.identityHashCode(userDAO));
         return getUserService.handle(obj);
+    }
+
+    @PutMapping("/forgotpassword")
+    public Response forgotPassword(@RequestBody ForgotPasswordRequestObject obj, UserDAO userDAO, HttpServletRequest request, UserDOToUserResponseMapper responseMapper) {
+        BaseHandler<ForgotPasswordRequestObject> handler = new ForgotPasswordService(userDAO,request,responseMapper);
+        return handler.handle(obj);
     }
 
 }

@@ -4,7 +4,6 @@ import com.nexflare.testhiber.dao.AbstractDAO;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.mapper.IRequestToDOMapper;
 import com.nexflare.testhiber.pojo.Comments;
-import com.nexflare.testhiber.pojo.Likes;
 import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.Comment.UpdateCommentRequestObject;
 import com.nexflare.testhiber.responseModel.BaseResponseModel;
