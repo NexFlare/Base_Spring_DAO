@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -41,7 +42,6 @@ public class UserController {
         BaseHandler<CreateNewUserRequestObject> createNewUserService = new CreateUserService(userDao, request,mapper);
         return createNewUserService.handle(user);
     }
-
 
     @GetMapping("/{id}")
     public Response getUserDetail(@PathVariable UUID id, UserDAO userDAO, HttpServletRequest request) {

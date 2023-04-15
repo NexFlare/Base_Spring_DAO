@@ -44,6 +44,11 @@ public abstract class BaseHandler<T extends AbstractRequestObject> {
         }
     }
 
+    protected User getUserFromSession() {
+        User user = (User) this.request.getSession().getAttribute("USER_OBJECT");
+        return user;
+    }
+
     protected abstract Response handleRequest(T object) throws AbstractException;
 
 }

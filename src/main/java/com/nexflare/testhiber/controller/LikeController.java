@@ -24,6 +24,7 @@ import java.util.UUID;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RequestMapping("/api/v1/like")
 public class LikeController {
 

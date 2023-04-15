@@ -115,6 +115,8 @@ public abstract class AbstractDAO<K extends AbstractDO, T> implements IDataRetri
 
     public abstract List<K> getElementByQuery(String property, String value);
 
+    public abstract List<K> getElementsByQuery(Map<String, Object> map);
+
     public abstract K getUniqueElementByQuery(Map<String, Object> map);
 
     protected Query getQuery(String tableName, Map<String, Object> map) {

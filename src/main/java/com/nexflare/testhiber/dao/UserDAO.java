@@ -1,7 +1,6 @@
 package com.nexflare.testhiber.dao;
 
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
-import com.nexflare.testhiber.pojo.Likes;
 import com.nexflare.testhiber.pojo.User;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
@@ -56,6 +55,11 @@ public class UserDAO extends AbstractDAO<User, UUID>{
                 return list;
             }
         }
+        return null;
+    }
+
+    @Override
+    public List<User> getElementsByQuery(Map<String, Object> map) {
         return null;
     }
 

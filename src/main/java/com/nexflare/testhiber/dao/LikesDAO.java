@@ -28,6 +28,11 @@ public class LikesDAO extends AbstractDAO<Likes, UUID>{
     }
 
     @Override
+    public List<Likes> getElementsByQuery(Map<String, Object> map) {
+        return null;
+    }
+
+    @Override
     public Likes getUniqueElementByQuery(Map<String, Object> map) {
         Query q = getQuery("Likes", map);
         Likes like = (Likes) q.getSingleResult();

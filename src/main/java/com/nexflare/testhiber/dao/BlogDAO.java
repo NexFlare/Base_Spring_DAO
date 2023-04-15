@@ -41,6 +41,13 @@ public class BlogDAO extends AbstractDAO<Blog, UUID>{
     }
 
     @Override
+    public List<Blog> getElementsByQuery(Map<String, Object> map) {
+        Query q = getQuery("Blog", map);
+        List<Blog> blogs = q.getResultList();
+        return blogs;
+    }
+
+    @Override
     public Blog getUniqueElementByQuery(Map<String, Object> map) {
         Query q = getQuery("Blog", map);
         Blog blog = (Blog) q.getSingleResult();

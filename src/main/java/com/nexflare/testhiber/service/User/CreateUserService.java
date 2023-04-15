@@ -46,7 +46,7 @@ public class CreateUserService extends BaseHandler<CreateNewUserRequestObject> {
         }
         User userObj = mapper.map(object);
         this.getUserDao().add(userObj);
-        return BaseResponseModel.<User>builder().response(userObj).build();
+        return BaseResponseModel.<User>builder().response(userObj).code(200).build();
     }
 
 

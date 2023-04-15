@@ -1,5 +1,6 @@
 package com.nexflare.testhiber.requestModel.User;
 
+import com.nexflare.testhiber.enums.UserType;
 import com.nexflare.testhiber.requestModel.AbstractRequestObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,4 +12,5 @@ public class CreateNewUserRequestObject extends AbstractRequestObject {
     private String lastName;
     private String email;
     private String password;
+    private UserType userType;
 }

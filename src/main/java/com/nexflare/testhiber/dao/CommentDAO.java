@@ -34,6 +34,11 @@ public class CommentDAO extends AbstractDAO<Comments, UUID>{
     }
 
     @Override
+    public List<Comments> getElementsByQuery(Map<String, Object> map) {
+        return null;
+    }
+
+    @Override
     public Comments getUniqueElementByQuery(Map<String, Object> map) {
         return null;
     }
