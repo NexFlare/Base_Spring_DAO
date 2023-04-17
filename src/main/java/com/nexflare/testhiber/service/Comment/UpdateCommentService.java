@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.Comment;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.mapper.IRequestToDOMapper;
 import com.nexflare.testhiber.pojo.Comments;
@@ -16,10 +16,10 @@ import java.util.UUID;
 
 public class UpdateCommentService extends AuthenticatedBaseHandler<UpdateCommentRequestObject>{
 
-    AbstractDAO<Comments, UUID> commentDao;
+    AbstractDAL<Comments, UUID> commentDao;
     IRequestToDOMapper<UpdateCommentRequestObject, Comments> mapper;
-    public UpdateCommentService(AbstractDAO<User, UUID> userDao, HttpServletRequest request,
-                                AbstractDAO<Comments, UUID> commentDao, IRequestToDOMapper<UpdateCommentRequestObject, Comments> mapper) {
+    public UpdateCommentService(AbstractDAL<User, UUID> userDao, HttpServletRequest request,
+                                AbstractDAL<Comments, UUID> commentDao, IRequestToDOMapper<UpdateCommentRequestObject, Comments> mapper) {
         super(userDao, request);
         this.commentDao = commentDao;
         this.mapper = mapper;

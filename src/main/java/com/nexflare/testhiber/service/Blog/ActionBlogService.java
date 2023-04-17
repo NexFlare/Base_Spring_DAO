@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.Blog;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.enums.BlogStatus;
 import com.nexflare.testhiber.enums.UserType;
 import com.nexflare.testhiber.exceptions.AbstractException;
@@ -16,9 +16,9 @@ import java.util.UUID;
 
 public class ActionBlogService extends AuthenticatedBaseHandler<ActionBlogRequestObject> {
 
-    private final AbstractDAO<Blog, UUID> blogDao;
+    private final AbstractDAL<Blog, UUID> blogDao;
 
-    public ActionBlogService(AbstractDAO<User, UUID> userDao, HttpServletRequest request, AbstractDAO<Blog, UUID> blogDao) {
+    public ActionBlogService(AbstractDAL<User, UUID> userDao, HttpServletRequest request, AbstractDAL<Blog, UUID> blogDao) {
         super(userDao, request);
         this.blogDao = blogDao;
     }

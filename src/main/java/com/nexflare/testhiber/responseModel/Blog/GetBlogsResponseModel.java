@@ -26,6 +26,8 @@ public class GetBlogsResponseModel extends AbstractResponseModel {
         private String location;
         private BlogStatus status;
         private Integer likes;
+        private String imageUrl;
+        private boolean liked;
     }
 
     @Getter

@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.AbstractRequestObject;
@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 public abstract class AuthenticatedBaseHandler<T extends AbstractRequestObject> extends BaseHandler<T> {
-    public AuthenticatedBaseHandler(AbstractDAO<User, UUID> userDao, HttpServletRequest request) {
+    public AuthenticatedBaseHandler(AbstractDAL<User, UUID> userDao, HttpServletRequest request) {
         super(userDao, request);
     }
 

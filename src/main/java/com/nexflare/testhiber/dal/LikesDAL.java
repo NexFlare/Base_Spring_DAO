@@ -1,7 +1,6 @@
-package com.nexflare.testhiber.dao;
+package com.nexflare.testhiber.dal;
 
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
-import com.nexflare.testhiber.pojo.Blog;
 import com.nexflare.testhiber.pojo.Likes;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
-public class LikesDAO extends AbstractDAO<Likes, UUID>{
+public class LikesDAL extends AbstractDAL<Likes, UUID> {
 
 
     @Override

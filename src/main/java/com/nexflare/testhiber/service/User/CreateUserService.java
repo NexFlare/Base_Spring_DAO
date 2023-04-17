@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.User;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.exceptions.IllegalArgumentException;
@@ -21,7 +21,7 @@ import java.util.UUID;
 public class CreateUserService extends BaseHandler<CreateNewUserRequestObject> {
 
     IRequestToDOMapper<CreateNewUserRequestObject, User> mapper;
-    public CreateUserService(AbstractDAO<User, UUID> userDao, HttpServletRequest request, IRequestToDOMapper<CreateNewUserRequestObject, User> mapper) {
+    public CreateUserService(AbstractDAL<User, UUID> userDao, HttpServletRequest request, IRequestToDOMapper<CreateNewUserRequestObject, User> mapper) {
         super(userDao, request);
         this.mapper = mapper;
     }

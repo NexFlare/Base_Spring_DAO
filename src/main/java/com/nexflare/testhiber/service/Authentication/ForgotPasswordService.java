@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.Authentication;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.helper.ObjectToMap;
 import com.nexflare.testhiber.mapper.User.UserDOToUserResponseMapper;
@@ -18,7 +18,7 @@ import java.util.UUID;
 public class ForgotPasswordService extends AuthenticatedBaseHandler<ForgotPasswordRequestObject> {
 
     private UserDOToUserResponseMapper responseMapper;
-    public ForgotPasswordService(AbstractDAO<User, UUID> userDao, HttpServletRequest request, UserDOToUserResponseMapper responseMapper) {
+    public ForgotPasswordService(AbstractDAL<User, UUID> userDao, HttpServletRequest request, UserDOToUserResponseMapper responseMapper) {
         super(userDao, request);
         this.responseMapper = responseMapper;
     }

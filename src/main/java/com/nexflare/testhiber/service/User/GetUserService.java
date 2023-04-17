@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.User;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.User.GetUserRequestObject;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service("GetUserService")
 public class GetUserService extends AuthenticatedBaseHandler<GetUserRequestObject> {
-    public GetUserService(AbstractDAO<User, UUID> userDao, HttpServletRequest request) {
+    public GetUserService(AbstractDAL<User, UUID> userDao, HttpServletRequest request) {
         super(userDao, request);
     }
 

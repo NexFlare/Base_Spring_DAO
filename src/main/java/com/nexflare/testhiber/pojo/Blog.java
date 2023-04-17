@@ -1,7 +1,6 @@
 package com.nexflare.testhiber.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nexflare.testhiber.enums.BlogStatus;
 import com.nexflare.testhiber.enums.BlogType;
 import jakarta.annotation.Nullable;

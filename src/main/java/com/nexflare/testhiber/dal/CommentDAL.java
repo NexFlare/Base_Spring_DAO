@@ -1,8 +1,7 @@
-package com.nexflare.testhiber.dao;
+package com.nexflare.testhiber.dal;
 
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.pojo.Comments;
-import com.nexflare.testhiber.pojo.User;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
-public class CommentDAO extends AbstractDAO<Comments, UUID>{
+public class CommentDAL extends AbstractDAL<Comments, UUID> {
     @Override
     public Comments get(UUID id) throws DataNotFoundException {
         begin();

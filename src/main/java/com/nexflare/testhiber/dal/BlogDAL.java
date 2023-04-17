@@ -1,4 +1,4 @@
-package com.nexflare.testhiber.dao;
+package com.nexflare.testhiber.dal;
 
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.pojo.Blog;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
-public class BlogDAO extends AbstractDAO<Blog, UUID>{
+public class BlogDAL extends AbstractDAL<Blog, UUID> {
 
     @Override
     public Blog get(UUID id) throws DataNotFoundException {

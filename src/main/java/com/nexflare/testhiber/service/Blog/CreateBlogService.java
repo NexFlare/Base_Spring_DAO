@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.Blog;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.enums.BlogStatus;
 import com.nexflare.testhiber.mapper.Blog.CreateBlogRequestToBlogMapper;
 import com.nexflare.testhiber.mapper.IRequestToDOMapper;
@@ -20,12 +20,12 @@ import java.util.UUID;
 @Configurable
 public class CreateBlogService extends BaseHandler<CreateBlogRequestObject> {
 
-    private final AbstractDAO<Blog, UUID> blogDao;
+    private final AbstractDAL<Blog, UUID> blogDao;
     private final IRequestToDOMapper<CreateBlogRequestObject, Blog> mapper;
 
     @Autowired
-    public CreateBlogService(AbstractDAO<User, UUID> userDao, HttpServletRequest request,
-                             AbstractDAO<Blog, UUID> blogDao, CreateBlogRequestToBlogMapper mapper) {
+    public CreateBlogService(AbstractDAL<User, UUID> userDao, HttpServletRequest request,
+                             AbstractDAL<Blog, UUID> blogDao, CreateBlogRequestToBlogMapper mapper) {
         super(userDao, request);
         this.blogDao = blogDao;
         this.mapper = mapper;

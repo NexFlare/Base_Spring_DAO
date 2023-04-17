@@ -1,4 +1,4 @@
-package com.nexflare.testhiber.dao;
+package com.nexflare.testhiber.dal;
 
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.pojo.AbstractDO;
@@ -15,6 +15,7 @@ public interface IDataRetrieval<K extends AbstractDO, T> {
 
     void delete(K obj);
 
+    int bulkDelete(List<K> objArray);
 
     void add(K obj);
 }

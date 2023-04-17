@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.Comment;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.pojo.Comments;
 import com.nexflare.testhiber.pojo.User;
@@ -16,8 +16,8 @@ import java.util.UUID;
 @Service("GetCommentService")
 public class GetCommentService extends AuthenticatedBaseHandler<GetByIdRequestObject> {
 
-    AbstractDAO<Comments, UUID> commentDAO;
-    public GetCommentService(AbstractDAO<User, UUID> userDao, HttpServletRequest request, AbstractDAO<Comments, UUID> commentDAO) {
+    AbstractDAL<Comments, UUID> commentDAO;
+    public GetCommentService(AbstractDAL<User, UUID> userDao, HttpServletRequest request, AbstractDAL<Comments, UUID> commentDAO) {
         super(userDao, request);
         this.commentDAO = commentDAO;
     }

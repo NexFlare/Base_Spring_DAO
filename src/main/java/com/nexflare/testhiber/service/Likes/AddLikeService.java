@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.Likes;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.helper.ObjectToMap;
 import com.nexflare.testhiber.mapper.IRequestToDOMapper;
@@ -19,11 +19,11 @@ import java.util.UUID;
 @Service
 public class AddLikeService extends AuthenticatedBaseHandler<AddLikeRequestObject> {
 
-    AbstractDAO<Likes, UUID> likesDAO;
+    AbstractDAL<Likes, UUID> likesDAO;
     IRequestToDOMapper<AddLikeRequestObject, Likes> mapper;
 
 
-    public AddLikeService(AbstractDAO<User, UUID> userDao, HttpServletRequest request, AbstractDAO<Likes, UUID> likesDAO, IRequestToDOMapper<AddLikeRequestObject, Likes> mapper) {
+    public AddLikeService(AbstractDAL<User, UUID> userDao, HttpServletRequest request, AbstractDAL<Likes, UUID> likesDAO, IRequestToDOMapper<AddLikeRequestObject, Likes> mapper) {
         super(userDao, request);
         this.likesDAO = likesDAO;
         this.mapper = mapper;

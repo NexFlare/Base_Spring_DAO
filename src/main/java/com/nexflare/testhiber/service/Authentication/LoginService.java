@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.Authentication;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.helper.ObjectToMap;
@@ -21,7 +21,7 @@ import java.util.UUID;
 public class LoginService extends BaseHandler<GetUserRequestObject> {
 
     IRequestToDOMapper<GetUserRequestObject, User> userMapper;
-    public LoginService(AbstractDAO<User, UUID> userDao, HttpServletRequest request, IRequestToDOMapper<GetUserRequestObject, User> userMapper) {
+    public LoginService(AbstractDAL<User, UUID> userDao, HttpServletRequest request, IRequestToDOMapper<GetUserRequestObject, User> userMapper) {
         super(userDao, request);
         this.userMapper = userMapper;
     }

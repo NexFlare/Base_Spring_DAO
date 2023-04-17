@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.service.Likes;
 
-import com.nexflare.testhiber.dao.AbstractDAO;
+import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.mapper.IRequestToDOMapper;
 import com.nexflare.testhiber.pojo.Likes;
@@ -18,12 +18,12 @@ import java.util.UUID;
 
 @Service
 public class DeleteLikeService extends AuthenticatedBaseHandler<AddLikeRequestObject> {
-    AbstractDAO<Likes, UUID> likesDAO;
+    AbstractDAL<Likes, UUID> likesDAO;
     IRequestToDOMapper<AddLikeRequestObject, Likes> mapper;
 
 
-    public DeleteLikeService(AbstractDAO<User, UUID> userDao, HttpServletRequest request,
-                             AbstractDAO<Likes, UUID> likesDAO, IRequestToDOMapper<AddLikeRequestObject, Likes> mapper) {
+    public DeleteLikeService(AbstractDAL<User, UUID> userDao, HttpServletRequest request,
+                             AbstractDAL<Likes, UUID> likesDAO, IRequestToDOMapper<AddLikeRequestObject, Likes> mapper) {
         super(userDao, request);
         this.likesDAO = likesDAO;
         this.mapper = mapper;
@@ -34,6 +34,7 @@ public class DeleteLikeService extends AuthenticatedBaseHandler<AddLikeRequestOb
         Likes likeObj = this.mapper.map(object);
         Map<String, Object> map = new HashMap<>();
         map.put("blog", likeObj.getBlog());
+        map.put("user", likeObj.getUser());
         Likes like = this.likesDAO.getUniqueElementByQuery(map);
         this.likesDAO.delete(like);
         return BaseResponseModel.builder().code(200).response("Success").build();

@@ -1,6 +1,6 @@
 package com.nexflare.testhiber.controller;
 
-import com.nexflare.testhiber.dao.UserDAO;
+import com.nexflare.testhiber.dal.UserDAL;
 import com.nexflare.testhiber.mapper.User.CreateUserRequestToUserMapper;
 import com.nexflare.testhiber.mapper.User.GetUserRequestToUserMapper;
 import com.nexflare.testhiber.mapper.User.UserDOToUserResponseMapper;
@@ -27,33 +27,33 @@ import java.util.UUID;
 public class UserController {
 
     @GetMapping("/")
-    public List<User> getUsers(UserDAO dao) {
+    public List<User> getUsers(UserDAL dao) {
         return dao.getAll();
     }
 
     @PostMapping("/login")
-    public Response loginUser(@RequestBody GetUserRequestObject object, UserDAO userDao, HttpServletRequest request, GetUserRequestToUserMapper userMapper) {
-        BaseHandler<GetUserRequestObject> userRequestService = new LoginService(userDao,request,userMapper);
+    public Response loginUser(@RequestBody GetUserRequestObject object, UserDAL userDAL, HttpServletRequest request, GetUserRequestToUserMapper userMapper) {
+        BaseHandler<GetUserRequestObject> userRequestService = new LoginService(userDAL,request,userMapper);
         return userRequestService.handle(object);
     }
 
     @PostMapping("/")
-    public Response addUser(@RequestBody CreateNewUserRequestObject user, UserDAO userDao, HttpServletRequest request, CreateUserRequestToUserMapper mapper) {
-        BaseHandler<CreateNewUserRequestObject> createNewUserService = new CreateUserService(userDao, request,mapper);
+    public Response addUser(@RequestBody CreateNewUserRequestObject user, UserDAL userDAL, HttpServletRequest request, CreateUserRequestToUserMapper mapper) {
+        BaseHandler<CreateNewUserRequestObject> createNewUserService = new CreateUserService(userDAL, request,mapper);
         return createNewUserService.handle(user);
     }
 
     @GetMapping("/{id}")
-    public Response getUserDetail(@PathVariable UUID id, UserDAO userDAO, HttpServletRequest request) {
+    public Response getUserDetail(@PathVariable UUID id, UserDAL userDAL, HttpServletRequest request) {
         GetByIdRequestObject obj = new GetByIdRequestObject(id);
-        BaseHandler<GetByIdRequestObject> getUserService = new GetUserByIDService(userDAO, request);
-        System.out.println(System.identityHashCode(userDAO));
+        BaseHandler<GetByIdRequestObject> getUserService = new GetUserByIDService(userDAL, request);
+        System.out.println(System.identityHashCode(userDAL));
         return getUserService.handle(obj);
     }
 
     @PutMapping("/forgotpassword")
-    public Response forgotPassword(@RequestBody ForgotPasswordRequestObject obj, UserDAO userDAO, HttpServletRequest request, UserDOToUserResponseMapper responseMapper) {
-        BaseHandler<ForgotPasswordRequestObject> handler = new ForgotPasswordService(userDAO,request,responseMapper);
+    public Response forgotPassword(@RequestBody ForgotPasswordRequestObject obj, UserDAL userDAL, HttpServletRequest request, UserDOToUserResponseMapper responseMapper) {
+        BaseHandler<ForgotPasswordRequestObject> handler = new ForgotPasswordService(userDAL,request,responseMapper);
         return handler.handle(obj);
     }
 
