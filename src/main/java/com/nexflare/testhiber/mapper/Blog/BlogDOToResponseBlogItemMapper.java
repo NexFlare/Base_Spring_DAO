@@ -26,6 +26,7 @@ public class BlogDOToResponseBlogItemMapper implements IDOToResponseMapper<Blog,
                 .status(obj.getBlogStatus())
                 .likes(obj.getLikes().size())
                 .imageUrl(obj.getImage())
+                .text(obj.getText())
                 .build();
         return blogItem;
     }

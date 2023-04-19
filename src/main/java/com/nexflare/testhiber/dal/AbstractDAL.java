@@ -131,9 +131,7 @@ public abstract class AbstractDAL<K extends AbstractDO, T> implements IDataRetri
         } catch (HibernateException e) {
             rollback();
             log.log(Level.SEVERE, e.getMessage());
-            System.out.println("Error has occurred " + e);
-            //throw new AdException("Could not create the category", e);
-//            throw new CategoryException("Exception while deleting category: " + e.getMessage());
+            throw new DatabaseException("Invalid data provided");
         }
     }
 

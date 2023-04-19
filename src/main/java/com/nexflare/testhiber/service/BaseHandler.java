@@ -40,7 +40,7 @@ public abstract class BaseHandler<T extends AbstractRequestObject> {
             return this.handleRequest(object);
         } catch (AbstractException exception) {
             String message = exception.getMessage();
-            return BaseResponseModel.builder().errorMessage(message).build();
+            return BaseResponseModel.builder().errorMessage(message).code(400).build();
         }
     }
 

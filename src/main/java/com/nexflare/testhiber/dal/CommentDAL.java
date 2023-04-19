@@ -1,6 +1,7 @@
 package com.nexflare.testhiber.dal;
 
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
+import com.nexflare.testhiber.pojo.Blog;
 import com.nexflare.testhiber.pojo.Comments;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
@@ -34,7 +35,9 @@ public class CommentDAL extends AbstractDAL<Comments, UUID> {
 
     @Override
     public List<Comments> getElementsByQuery(Map<String, Object> map) {
-        return null;
+        org.hibernate.query.Query q = getQuery("Comments", map);
+        List<Comments> comments = q.getResultList();
+        return comments;
     }
 
     @Override

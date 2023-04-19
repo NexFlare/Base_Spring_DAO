@@ -25,6 +25,7 @@ public class Blog extends AbstractDO{
 
     private String title;
 
+    @Column(length = 10000)
     private String text;
 
     @Nullable
@@ -44,7 +45,7 @@ public class Blog extends AbstractDO{
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "blog")
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
     private List<Likes> likes;
 
 

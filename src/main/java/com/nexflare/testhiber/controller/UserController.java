@@ -1,5 +1,7 @@
 package com.nexflare.testhiber.controller;
 
+import com.nexflare.testhiber.dal.BlogDAL;
+import com.nexflare.testhiber.dal.CommentDAL;
 import com.nexflare.testhiber.dal.UserDAL;
 import com.nexflare.testhiber.mapper.User.CreateUserRequestToUserMapper;
 import com.nexflare.testhiber.mapper.User.GetUserRequestToUserMapper;
@@ -14,6 +16,7 @@ import com.nexflare.testhiber.service.Authentication.ForgotPasswordService;
 import com.nexflare.testhiber.service.Authentication.LoginService;
 import com.nexflare.testhiber.service.BaseHandler;
 import com.nexflare.testhiber.service.User.CreateUserService;
+import com.nexflare.testhiber.service.User.DeleteUserService;
 import com.nexflare.testhiber.service.User.GetUserByIDService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +57,12 @@ public class UserController {
     @PutMapping("/forgotpassword")
     public Response forgotPassword(@RequestBody ForgotPasswordRequestObject obj, UserDAL userDAL, HttpServletRequest request, UserDOToUserResponseMapper responseMapper) {
         BaseHandler<ForgotPasswordRequestObject> handler = new ForgotPasswordService(userDAL,request,responseMapper);
+        return handler.handle(obj);
+    }
+
+    @DeleteMapping("/")
+    public Response deleteUser(@RequestBody GetByIdRequestObject obj, UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, CommentDAL commentDAL) {
+        BaseHandler<GetByIdRequestObject> handler = new DeleteUserService(userDAL, request, blogDAL, commentDAL);
         return handler.handle(obj);
     }
 

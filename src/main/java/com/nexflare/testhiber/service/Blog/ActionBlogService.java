@@ -33,7 +33,7 @@ public class ActionBlogService extends AuthenticatedBaseHandler<ActionBlogReques
             Blog blog = this.blogDao.get(object.getBlogId());
             blog.setBlogStatus(object.isApproved() ? BlogStatus.APPROVED : BlogStatus.REJECTED);
             this.blogDao.update(blog);
-            return BaseResponseModel.<Blog>builder().response(blog).code(200).build();
+            return BaseResponseModel.<String>builder().response(object.isApproved() ? "approved" : "rejected").code(200).build();
         } else {
            return BaseResponseModel.builder().code(401).errorMessage("User not authenticated").code(401).build();
         }

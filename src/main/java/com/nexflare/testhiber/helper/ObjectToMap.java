@@ -14,7 +14,7 @@ public class ObjectToMap<T> {
         Field[] allFields = object.getClass().getDeclaredFields();
         for (Field field : allFields) {
             field.setAccessible(true);
-            Object value = null;
+            Object value;
             try {
                 value = field.get(object);
                 if(value != null) map.put(field.getName(), value);

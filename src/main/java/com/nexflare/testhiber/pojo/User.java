@@ -17,7 +17,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User extends AbstractDO{
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = "id"),
+        @UniqueConstraint(columnNames = "email")
+})
+public class User extends AbstractDO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,7 +47,7 @@ public class User extends AbstractDO{
     private UserType userType;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<Blog> blogs;
 
 }

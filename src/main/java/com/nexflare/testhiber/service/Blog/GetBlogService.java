@@ -62,6 +62,6 @@ public class GetBlogService extends AuthenticatedBaseHandler<GetBlogRequestObjec
 
         GetBlogsResponseModel responseModel = GetBlogsResponseModel.builder().blogs(blogsResponseList).build();
 
-        return BaseResponseModel.<GetBlogsResponseModel>builder().response(responseModel).build();
+        return BaseResponseModel.<GetBlogsResponseModel>builder().response(responseModel).code(200).build();
     }
 }

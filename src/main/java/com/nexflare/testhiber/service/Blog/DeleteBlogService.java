@@ -28,8 +28,6 @@ public class DeleteBlogService extends AuthenticatedBaseHandler<GetByIdRequestOb
         if(!blog.getUser().getId().equals(this.getUserFromSession().getId())) {
             return BaseResponseModel.builder().code(403).errorMessage("Unauthorized request").build();
         }
-        List<Likes> likesList = blog.getLikes();
-        likesDAL.bulkDelete(likesList);
         blogDAL.delete(blog);
 
         return BaseResponseModel.builder().code(200).response("Successfully deleted blog").build();

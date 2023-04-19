@@ -23,6 +23,7 @@ public class Comments extends AbstractDO{
     @ManyToOne
     @JoinColumn(name="blogid", referencedColumnName = "blogid")
     private Blog blog;
+
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "id")
     private User user;

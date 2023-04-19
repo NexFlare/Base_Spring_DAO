@@ -34,7 +34,13 @@ public class LikesDAL extends AbstractDAL<Likes, UUID> {
     @Override
     public Likes getUniqueElementByQuery(Map<String, Object> map) {
         Query q = getQuery("Likes", map);
-        Likes like = (Likes) q.getSingleResult();
-        return like;
+        try{
+            Likes like = (Likes) q.getSingleResult();
+            return like;
+        } catch(Exception e) {
+            throw new DataNotFoundException("Data not found");
+        }
+
+
     }
 }

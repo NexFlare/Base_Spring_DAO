@@ -3,6 +3,7 @@ package com.nexflare.testhiber.service.User;
 import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
+import com.nexflare.testhiber.exceptions.DatabaseException;
 import com.nexflare.testhiber.exceptions.IllegalArgumentException;
 import com.nexflare.testhiber.mapper.IRequestToDOMapper;
 import com.nexflare.testhiber.pojo.User;
@@ -34,18 +35,23 @@ public class CreateUserService extends BaseHandler<CreateNewUserRequestObject> {
                 object.getFirstName() == null) {
             throw new IllegalArgumentException("Mandatory fields are missing");
         }
-        Map<String, Object> map = new HashMap<>();
-        map.put("email", object.getEmail());
-        User user = null;
-        try{
-            user = this.getUserDao().getUniqueElementByQuery(map);
-        } catch(DataNotFoundException ignored) {}
-//        List<User> userList = this.getUserDao().getElementByQuery("email", object.getEmail());
-        if(user != null) {
-            throw new IllegalArgumentException("User already exist");
-        }
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("email", object.getEmail());
+//        User user = null;
+//        try{
+//            user = this.getUserDao().getUniqueElementByQuery(map);
+//        } catch(DataNotFoundException ignored) {}
+////        List<User> userList = this.getUserDao().getElementByQuery("email", object.getEmail());
+//        if(user != null) {
+//            throw new IllegalArgumentException("User already exist");
+//        }
         User userObj = mapper.map(object);
-        this.getUserDao().add(userObj);
+        try{
+            this.getUserDao().add(userObj);
+        } catch(AbstractException e) {
+            throw new DatabaseException("User already exists");
+        }
+
         return BaseResponseModel.<User>builder().response(userObj).code(200).build();
     }
 
