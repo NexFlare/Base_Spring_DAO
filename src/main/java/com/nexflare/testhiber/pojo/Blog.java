@@ -45,7 +45,7 @@ public class Blog extends AbstractDO{
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Likes> likes;
 
 

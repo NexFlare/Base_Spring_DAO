@@ -36,9 +36,11 @@ public class BlogController {
                                   @RequestParam(required = false) BlogType type,
                                   @RequestParam(required = false) String location,
                                   UserDAL userDAL, HttpServletRequest request,
-                                  BlogDAL blogDao, BlogDOToResponseBlogItemMapper responseMapper) {
+                                  BlogDAL blogDAL, BlogDOToResponseBlogItemMapper responseMapper) {
+        System.out.println(System.identityHashCode(userDAL));
+        System.out.println(System.identityHashCode(blogDAL));
         GetBlogRequestObject requestObject = GetBlogRequestObject.builder().type(type).blogId(blogId).location(location).build();
-        BaseHandler<GetBlogRequestObject> getBlogService = new GetBlogService(userDAL,request,blogDao, responseMapper);
+        BaseHandler<GetBlogRequestObject> getBlogService = new GetBlogService(userDAL,request,blogDAL, responseMapper);
         return getBlogService.handle(requestObject);
     }
 

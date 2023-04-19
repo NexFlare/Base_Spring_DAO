@@ -10,6 +10,7 @@ import com.nexflare.testhiber.responseModel.BaseResponseModel;
 import com.nexflare.testhiber.responseModel.Response;
 import com.nexflare.testhiber.service.AuthenticatedBaseHandler;
 import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.Hibernate;
 
 import java.util.UUID;
 
@@ -38,7 +39,7 @@ public class UpdateBlogService extends AuthenticatedBaseHandler<UpdateBlogReques
         if(blog.getTitle() != null) dbBlog.setTitle(blog.getTitle());
 
         blogDao.update(dbBlog);
-
+//        Hibernate.initialize(dbBlog.getLikes());
         return BaseResponseModel.<Blog>builder().response(dbBlog).code(200).build();
     }
 }

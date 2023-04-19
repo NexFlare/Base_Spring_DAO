@@ -19,6 +19,7 @@ public class UserDAL extends AbstractDAL<User, UUID> {
             try{
                 User user =(User) q.getSingleResult();
                 commit();
+                close();
                 if(user == null) throw new DataNotFoundException("User not found");
                 return user;
             } catch(NoResultException e) {
@@ -27,7 +28,7 @@ public class UserDAL extends AbstractDAL<User, UUID> {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> _getAll() {
         String s = "FROM User";
         Query query = getSession().createQuery(s);
         List<User> list = query.getResultList();
@@ -43,7 +44,6 @@ public class UserDAL extends AbstractDAL<User, UUID> {
                 query = getSession().createQuery(statement, User.class);
                 query.setParameter("email", value);
                 List<User> list = query.getResultList();
-//                commit();
                 return list;
             }
             case "firstName" -> {
@@ -51,7 +51,6 @@ public class UserDAL extends AbstractDAL<User, UUID> {
                 query = getSession().createQuery(statement, User.class);
                 query.setParameter("firstname", value);
                 List<User> list = query.getResultList();
-//                commit();
                 return list;
             }
         }
@@ -59,12 +58,12 @@ public class UserDAL extends AbstractDAL<User, UUID> {
     }
 
     @Override
-    public List<User> getElementsByQuery(Map<String, Object> map) {
+    public List<User> _getElementsByQuery(Map<String, Object> map) {
         return null;
     }
 
     @Override
-    public User getUniqueElementByQuery(Map<String, Object> map) throws DataNotFoundException {
+    public User _getUniqueElementByQuery(Map<String, Object> map) throws DataNotFoundException {
         Query query = this.getQuery("User", map);
         try{
             User user = (User) query.getSingleResult();
@@ -72,8 +71,5 @@ public class UserDAL extends AbstractDAL<User, UUID> {
         } catch(NoResultException exception) {
             throw new DataNotFoundException(exception.getMessage());
         }
-
     }
-
-
 }

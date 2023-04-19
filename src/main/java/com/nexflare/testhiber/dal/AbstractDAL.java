@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -62,7 +63,12 @@ public abstract class AbstractDAL<K extends AbstractDO, T> implements IDataRetri
 
     @Override
     public List<K> getAll() throws DataNotFoundException {
-        return null;
+        try{
+            return _getAll();
+        } catch(Exception e) {
+            log.log(Level.SEVERE, e.getMessage());
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     @Override
@@ -137,9 +143,38 @@ public abstract class AbstractDAL<K extends AbstractDO, T> implements IDataRetri
 
     public abstract List<K> getElementByQuery(String property, String value);
 
-    public abstract List<K> getElementsByQuery(Map<String, Object> map);
+    public List<K> getElementsByQuery(Map<String, Object> map) {
+        try{
+            begin();
+            List<K> list = _getElementsByQuery(map);
+            commit();
+            close();
+            return list;
+        } catch(Exception e) {
+            log.log(Level.SEVERE,e.getMessage());
+            throw new DatabaseException(e.getMessage());
+        }
 
-    public abstract K getUniqueElementByQuery(Map<String, Object> map);
+    }
+
+    public K getUniqueElementByQuery(Map<String, Object> map) {
+        try{
+            begin();
+            K element = _getUniqueElementByQuery(map);
+            commit();
+            close();
+            return element;
+        } catch(Exception e) {
+            log.log(Level.SEVERE,e.getMessage());
+            throw new DatabaseException(e.getMessage());
+        }
+    }
+
+    protected abstract List<K> _getElementsByQuery(Map<String, Object> map);
+
+    protected abstract K _getUniqueElementByQuery(Map<String, Object> map);
+
+    protected abstract List<K> _getAll();
 
     protected Query getQuery(String tableName, Map<String, Object> map) {
         StringBuilder sb = new StringBuilder("from "  + tableName + " where ");

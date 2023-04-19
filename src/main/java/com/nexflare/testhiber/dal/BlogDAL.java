@@ -5,11 +5,14 @@ import com.nexflare.testhiber.pojo.Blog;
 import jakarta.persistence.NoResultException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @Component
+@RequestScope
 public class BlogDAL extends AbstractDAL<Blog, UUID> {
 
     @Override
@@ -28,7 +31,7 @@ public class BlogDAL extends AbstractDAL<Blog, UUID> {
     }
 
     @Override
-    public List<Blog> getAll() throws DataNotFoundException {
+    public List<Blog> _getAll() throws DataNotFoundException {
         String s = "FROM Blog";
         Query query = getSession().createQuery(s);
         List<Blog> list = query.list();
@@ -41,14 +44,14 @@ public class BlogDAL extends AbstractDAL<Blog, UUID> {
     }
 
     @Override
-    public List<Blog> getElementsByQuery(Map<String, Object> map) {
+    public List<Blog> _getElementsByQuery(Map<String, Object> map) {
         Query q = getQuery("Blog", map);
         List<Blog> blogs = q.getResultList();
         return blogs;
     }
 
     @Override
-    public Blog getUniqueElementByQuery(Map<String, Object> map) {
+    public Blog _getUniqueElementByQuery(Map<String, Object> map) {
         Query q = getQuery("Blog", map);
         Blog blog = (Blog) q.getSingleResult();
         return blog;

@@ -16,10 +16,12 @@ import com.nexflare.testhiber.responseModel.Response;
 import com.nexflare.testhiber.service.AuthenticatedBaseHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.*;
 
 @Service
+@RequestScope
 public class GetBlogService extends AuthenticatedBaseHandler<GetBlogRequestObject> {
 
     AbstractDAL<Blog, UUID> blogDao;
@@ -52,6 +54,7 @@ public class GetBlogService extends AuthenticatedBaseHandler<GetBlogRequestObjec
         for(int i =0;i<blogs.size();i++) {
             blogsResponseList.add(responseMapper.map(blogs.get(i)));
             List<Likes> likesArray = blogs.get(i).getLikes();
+            System.out.println(likesArray.size());
             for (Likes like : likesArray) {
                 if (like.getUser().getId().equals(user.getId())) {
                     blogsResponseList.get(i).setLiked(true);

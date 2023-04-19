@@ -47,7 +47,7 @@ public class User extends AbstractDO {
     private UserType userType;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Blog> blogs;
 
 }

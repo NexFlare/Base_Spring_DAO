@@ -14,7 +14,7 @@ public class LikesDAL extends AbstractDAL<Likes, UUID> {
 
 
     @Override
-    public List<Likes> getAll() throws DataNotFoundException {
+    public List<Likes> _getAll() throws DataNotFoundException {
         String s = "FROM Likes";
         Query query = getSession().createQuery(s);
         List<Likes> list = query.list();
@@ -27,12 +27,12 @@ public class LikesDAL extends AbstractDAL<Likes, UUID> {
     }
 
     @Override
-    public List<Likes> getElementsByQuery(Map<String, Object> map) {
+    public List<Likes> _getElementsByQuery(Map<String, Object> map) {
         return null;
     }
 
     @Override
-    public Likes getUniqueElementByQuery(Map<String, Object> map) {
+    public Likes _getUniqueElementByQuery(Map<String, Object> map) {
         Query q = getQuery("Likes", map);
         try{
             Likes like = (Likes) q.getSingleResult();
