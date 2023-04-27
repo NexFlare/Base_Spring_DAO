@@ -1,6 +1,7 @@
 package com.nexflare.testhiber.dal;
 
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
+import com.nexflare.testhiber.pojo.Comments;
 import com.nexflare.testhiber.pojo.Likes;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
@@ -22,14 +23,13 @@ public class LikesDAL extends AbstractDAL<Likes, UUID> {
     }
 
     @Override
-    public List<Likes> getElementByQuery(String property, String value) {
-        return null;
+    public List<Likes> _getElementsByQuery(Map<String, Object> map) {
+        Query q = getQuery("Likes", map);
+        List<Likes> comments = q.getResultList();
+        return comments;
     }
 
-    @Override
-    public List<Likes> _getElementsByQuery(Map<String, Object> map) {
-        return null;
-    }
+
 
     @Override
     public Likes _getUniqueElementByQuery(Map<String, Object> map) {
@@ -40,7 +40,5 @@ public class LikesDAL extends AbstractDAL<Likes, UUID> {
         } catch(Exception e) {
             throw new DataNotFoundException("Data not found");
         }
-
-
     }
 }

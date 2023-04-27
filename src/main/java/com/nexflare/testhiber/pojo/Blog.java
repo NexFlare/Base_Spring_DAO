@@ -1,6 +1,7 @@
 package com.nexflare.testhiber.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nexflare.testhiber.enums.BlogStatus;
 import com.nexflare.testhiber.enums.BlogType;
 import jakarta.annotation.Nullable;
@@ -48,5 +49,18 @@ public class Blog extends AbstractDO{
     @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Likes> likes;
 
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Comments> comments;
 
+    @Override
+    public int hashCode() {
+        return this.blogId.toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Blog blog = (Blog) obj;
+        return this.blogId.equals(blog.getBlogId());
+    }
 }

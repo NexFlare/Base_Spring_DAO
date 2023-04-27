@@ -1,5 +1,6 @@
 package com.nexflare.testhiber.requestModel.Blog;
 
+import com.nexflare.testhiber.enums.BlogStatus;
 import com.nexflare.testhiber.enums.BlogType;
 import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.AbstractRequestObject;

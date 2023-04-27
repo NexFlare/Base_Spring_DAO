@@ -23,6 +23,7 @@ public class UserDAL extends AbstractDAL<User, UUID> {
                 if(user == null) throw new DataNotFoundException("User not found");
                 return user;
             } catch(NoResultException e) {
+                rollback();
                 throw new DataNotFoundException("User not found");
             }
     }
@@ -36,31 +37,10 @@ public class UserDAL extends AbstractDAL<User, UUID> {
     }
 
     @Override
-    public List<User> getElementByQuery(String property, String value) {
-        final Query query;
-        switch (property) {
-            case "email" -> {
-                String statement = "from User where email = :email";
-                query = getSession().createQuery(statement, User.class);
-                query.setParameter("email", value);
-                List<User> list = query.getResultList();
-                return list;
-            }
-            case "firstName" -> {
-                String statement = "from User where firstName = :firstname";
-                query = getSession().createQuery(statement, User.class);
-                query.setParameter("firstname", value);
-                List<User> list = query.getResultList();
-                return list;
-            }
-        }
-        return null;
-    }
-
-    @Override
     public List<User> _getElementsByQuery(Map<String, Object> map) {
         return null;
     }
+
 
     @Override
     public User _getUniqueElementByQuery(Map<String, Object> map) throws DataNotFoundException {

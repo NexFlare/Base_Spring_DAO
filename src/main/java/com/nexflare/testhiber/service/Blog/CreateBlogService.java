@@ -40,7 +40,7 @@ public class CreateBlogService extends BaseHandler<CreateBlogRequestObject> {
             }
             blog.setBlogStatus(BlogStatus.PENDING);
             this.blogDao.add(blog);
-            return BaseResponseModel.<Blog>builder().response(blog).build();
+            return BaseResponseModel.<Blog>builder().response(blog).code(200).build();
         } else {
             return BaseResponseModel.
                     <Blog>builder()

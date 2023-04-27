@@ -8,8 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -58,7 +56,7 @@ public abstract class AbstractDAL<K extends AbstractDO, T> implements IDataRetri
     }
     @Override
     public K get(T id) throws DataNotFoundException {
-        return null;
+      return null;
     }
 
     @Override
@@ -140,9 +138,6 @@ public abstract class AbstractDAL<K extends AbstractDO, T> implements IDataRetri
             throw new DatabaseException("Invalid data provided");
         }
     }
-
-    public abstract List<K> getElementByQuery(String property, String value);
-
     public List<K> getElementsByQuery(Map<String, Object> map) {
         try{
             begin();
@@ -151,6 +146,7 @@ public abstract class AbstractDAL<K extends AbstractDO, T> implements IDataRetri
             close();
             return list;
         } catch(Exception e) {
+            rollback();
             log.log(Level.SEVERE,e.getMessage());
             throw new DatabaseException(e.getMessage());
         }
@@ -165,6 +161,7 @@ public abstract class AbstractDAL<K extends AbstractDO, T> implements IDataRetri
             close();
             return element;
         } catch(Exception e) {
+            rollback();
             log.log(Level.SEVERE,e.getMessage());
             throw new DatabaseException(e.getMessage());
         }

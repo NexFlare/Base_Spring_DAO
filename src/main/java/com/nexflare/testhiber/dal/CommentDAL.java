@@ -30,17 +30,15 @@ public class CommentDAL extends AbstractDAL<Comments, UUID> {
         }
     }
 
-    @Override
-    public List<Comments> getElementByQuery(String property, String value) {
-        return null;
-    }
 
     @Override
     public List<Comments> _getElementsByQuery(Map<String, Object> map) {
-        org.hibernate.query.Query q = getQuery("Comments", map);
+        Query q = getQuery("Comments", map);
         List<Comments> comments = q.getResultList();
         return comments;
     }
+
+
 
     @Override
     public Comments _getUniqueElementByQuery(Map<String, Object> map) {

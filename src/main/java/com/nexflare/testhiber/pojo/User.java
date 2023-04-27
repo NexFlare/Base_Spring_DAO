@@ -1,6 +1,7 @@
 package com.nexflare.testhiber.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nexflare.testhiber.enums.UserType;
 import jakarta.persistence.*;
@@ -35,7 +36,7 @@ public class User extends AbstractDO {
     @NotBlank(message = "Required Field Missing")
     private String lastName;
 
-    @Email
+    @Email(message = "Please enter a valid email address")
     @NotBlank(message = "Required Field Missing")
     private String email;
 
@@ -46,8 +47,8 @@ public class User extends AbstractDO {
     @Column(name="usertype")
     private UserType userType;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Blog> blogs;
 
 }

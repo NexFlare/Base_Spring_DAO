@@ -4,7 +4,9 @@ package com.nexflare.testhiber.controller;
 import com.nexflare.testhiber.dal.BlogDAL;
 import com.nexflare.testhiber.dal.LikesDAL;
 import com.nexflare.testhiber.dal.UserDAL;
+import com.nexflare.testhiber.enums.BlogStatus;
 import com.nexflare.testhiber.enums.BlogType;
+import com.nexflare.testhiber.mapper.Blog.BlogDOToGetBlogResponseModel;
 import com.nexflare.testhiber.mapper.Blog.BlogDOToResponseBlogItemMapper;
 import com.nexflare.testhiber.mapper.Blog.CreateBlogRequestToBlogMapper;
 import com.nexflare.testhiber.mapper.Blog.UpdateBlogRequestToBlogMapper;
@@ -17,11 +19,12 @@ import com.nexflare.testhiber.responseModel.Response;
 import com.nexflare.testhiber.service.BaseHandler;
 import com.nexflare.testhiber.service.Blog.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "http://10.110.131.218:3000"}, allowCredentials = "true")
 @RequestMapping("/api/v1/blog")
 public class BlogController {
 
@@ -37,9 +40,10 @@ public class BlogController {
                                   @RequestParam(required = false) String location,
                                   UserDAL userDAL, HttpServletRequest request,
                                   BlogDAL blogDAL, BlogDOToResponseBlogItemMapper responseMapper) {
-        System.out.println(System.identityHashCode(userDAL));
-        System.out.println(System.identityHashCode(blogDAL));
-        GetBlogRequestObject requestObject = GetBlogRequestObject.builder().type(type).blogId(blogId).location(location).build();
+        GetBlogRequestObject requestObject = GetBlogRequestObject.builder()
+                .type(type).blogId(blogId)
+                .location(location)
+                .build();
         BaseHandler<GetBlogRequestObject> getBlogService = new GetBlogService(userDAL,request,blogDAL, responseMapper);
         return getBlogService.handle(requestObject);
     }
@@ -62,5 +66,18 @@ public class BlogController {
     public Response deleteBlog(@RequestBody GetByIdRequestObject obj, UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, LikesDAL likesDAL) {
         BaseHandler<GetByIdRequestObject> handler = new DeleteBlogService(userDAL,request,blogDAL,likesDAL);
         return handler.handle(obj);
+    }
+
+    @GetMapping("/{id}")
+    public Response getBlogDetail(@PathVariable UUID id, UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, BlogDOToGetBlogResponseModel mapper) {
+        BaseHandler<GetByIdRequestObject> handler = new GetBlogByIDService(userDAL, request, blogDAL, mapper);
+        GetByIdRequestObject obj = new GetByIdRequestObject(id);
+        return handler.handle(obj);
+    }
+
+    @GetMapping("/pending")
+    public Response getPendingBlogs(UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, BlogDOToResponseBlogItemMapper responseMapper) {
+        BaseHandler<GetByIdRequestObject> handler = new GetPendingBlogs(userDAL,request,blogDAL, responseMapper);
+        return handler.handle(null);
     }
 }

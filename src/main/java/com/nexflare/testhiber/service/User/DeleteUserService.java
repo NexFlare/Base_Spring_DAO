@@ -23,13 +23,17 @@ public class DeleteUserService extends AuthenticatedBaseHandler<GetByIdRequestOb
     private AbstractDAL<Comments, UUID> commentsDAL;
     private AbstractDAL<Blog,UUID> blogDAL;
 
+    private AbstractDAL<Likes, UUID> likesDAL;
+
     public DeleteUserService(AbstractDAL<User, UUID> userDao,
                              HttpServletRequest request,
                              AbstractDAL<Blog,UUID> blogDAL,
-                             AbstractDAL<Comments, UUID> commentsDAL) {
+                             AbstractDAL<Comments, UUID> commentsDAL,
+                             AbstractDAL<Likes, UUID> likesDAL) {
         super(userDao, request);
         this.commentsDAL = commentsDAL;
         this.blogDAL = blogDAL;
+        this.likesDAL = likesDAL;
     }
 
     @Override
@@ -39,11 +43,15 @@ public class DeleteUserService extends AuthenticatedBaseHandler<GetByIdRequestOb
             return BaseResponseModel.builder().code(403).errorMessage("Unauthorized request").build();
         }
         Comments commentsObj = Comments.builder().user(user).build();
-        Map<String, Object> commentMap =new  ObjectToMap<Comments>().getMap(commentsObj);
-        List<Comments> commentsList = commentsDAL.getElementsByQuery(commentMap);
+        Map<String, Object> map =new  ObjectToMap<Comments>().getMap(commentsObj);
+        List<Comments> commentsList = commentsDAL.getElementsByQuery(map);
         commentsDAL.bulkDelete(commentsList);
-        List<Blog> blogList = blogDAL.getElementsByQuery(commentMap);
+        List<Blog> blogList = blogDAL.getElementsByQuery(map);
         blogDAL.bulkDelete(blogList);
+        Likes likeObj = Likes.builder().user(user).build();
+        map = new ObjectToMap<Likes>().getMap(likeObj);
+        List<Likes> likesList = likesDAL.getElementsByQuery(map);
+        likesDAL.bulkDelete(likesList);
         // to log out the user
         this.getRequest().setAttribute("USER_OBJECT", null);
         User userObj = User.builder().id(object.getId()).build();

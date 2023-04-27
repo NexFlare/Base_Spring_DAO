@@ -1,6 +1,7 @@
 package com.nexflare.testhiber.service.Blog;
 
 import com.nexflare.testhiber.dal.AbstractDAL;
+import com.nexflare.testhiber.dal.BlogDAL;
 import com.nexflare.testhiber.enums.BlogStatus;
 import com.nexflare.testhiber.enums.UserType;
 import com.nexflare.testhiber.exceptions.AbstractException;
@@ -24,14 +25,13 @@ import java.util.*;
 @RequestScope
 public class GetBlogService extends AuthenticatedBaseHandler<GetBlogRequestObject> {
 
-    AbstractDAL<Blog, UUID> blogDao;
+    BlogDAL blogDao;
     private final IDOToResponseMapper<Blog, GetBlogsResponseModel.BlogItem> responseMapper;
 
-    public GetBlogService(AbstractDAL<User, UUID> userDao, HttpServletRequest request, AbstractDAL<Blog, UUID> blogDao, IDOToResponseMapper<Blog, GetBlogsResponseModel.BlogItem> responseMapper) {
+    public GetBlogService(AbstractDAL<User, UUID> userDao, HttpServletRequest request, BlogDAL blogDao, IDOToResponseMapper<Blog, GetBlogsResponseModel.BlogItem> responseMapper) {
         super(userDao, request);
         this.blogDao = blogDao;
         this.responseMapper = responseMapper;
-
     }
 
     @Override
@@ -41,15 +41,8 @@ public class GetBlogService extends AuthenticatedBaseHandler<GetBlogRequestObjec
         Map<String, Object> map = mapper.getMap(object);
         User user = this.getUserFromSession();
         if(user.getUserType() != UserType.ADMIN) map.put("blogStatus", BlogStatus.APPROVED);
-        List<Blog> blogs = this.blogDao.getElementsByQuery(map);
-        map.remove("blogStatus");
-        map.put("user", user);
-        List<Blog> userBlogs = this.blogDao.getElementsByQuery(map);
-        Set<Blog> blogSet = new HashSet<>(userBlogs);
-        blogSet.addAll(blogs);
-        blogs = blogSet.stream().toList();
-
-        //Create response model
+//        List<Blog> blogs = this.blogDao.getElementsByQuery(map);
+        List<Blog> blogs = this.blogDao.searchBlogElements(map);
         List<GetBlogsResponseModel.BlogItem> blogsResponseList = new ArrayList<>();
         for(int i =0;i<blogs.size();i++) {
             blogsResponseList.add(responseMapper.map(blogs.get(i)));

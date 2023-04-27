@@ -2,6 +2,7 @@ package com.nexflare.testhiber.controller;
 
 import com.nexflare.testhiber.dal.BlogDAL;
 import com.nexflare.testhiber.dal.CommentDAL;
+import com.nexflare.testhiber.dal.LikesDAL;
 import com.nexflare.testhiber.dal.UserDAL;
 import com.nexflare.testhiber.mapper.User.CreateUserRequestToUserMapper;
 import com.nexflare.testhiber.mapper.User.GetUserRequestToUserMapper;
@@ -14,6 +15,7 @@ import com.nexflare.testhiber.requestModel.User.GetUserRequestObject;
 import com.nexflare.testhiber.responseModel.Response;
 import com.nexflare.testhiber.service.Authentication.ForgotPasswordService;
 import com.nexflare.testhiber.service.Authentication.LoginService;
+import com.nexflare.testhiber.service.Authentication.LogoutService;
 import com.nexflare.testhiber.service.BaseHandler;
 import com.nexflare.testhiber.service.User.CreateUserService;
 import com.nexflare.testhiber.service.User.DeleteUserService;
@@ -24,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "http://10.110.131.218:3000"}, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -38,6 +40,12 @@ public class UserController {
     public Response loginUser(@RequestBody GetUserRequestObject object, UserDAL userDAL, HttpServletRequest request, GetUserRequestToUserMapper userMapper) {
         BaseHandler<GetUserRequestObject> userRequestService = new LoginService(userDAL,request,userMapper);
         return userRequestService.handle(object);
+    }
+
+    @PostMapping("/logout")
+    public Response logoutUser(UserDAL userDAL, HttpServletRequest request) {
+        BaseHandler<GetByIdRequestObject> userRequestService = new LogoutService(userDAL,request);
+        return userRequestService.handle(new GetByIdRequestObject());
     }
 
     @PostMapping("/")
@@ -61,8 +69,8 @@ public class UserController {
     }
 
     @DeleteMapping("/")
-    public Response deleteUser(@RequestBody GetByIdRequestObject obj, UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, CommentDAL commentDAL) {
-        BaseHandler<GetByIdRequestObject> handler = new DeleteUserService(userDAL, request, blogDAL, commentDAL);
+    public Response deleteUser(@RequestBody GetByIdRequestObject obj, UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, CommentDAL commentDAL, LikesDAL likesDAL) {
+        BaseHandler<GetByIdRequestObject> handler = new DeleteUserService(userDAL, request, blogDAL, commentDAL, likesDAL);
         return handler.handle(obj);
     }
 

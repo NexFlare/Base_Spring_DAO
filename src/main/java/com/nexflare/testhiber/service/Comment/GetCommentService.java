@@ -25,6 +25,6 @@ public class GetCommentService extends AuthenticatedBaseHandler<GetByIdRequestOb
     @Override
     protected Response handleRequest(GetByIdRequestObject object) throws AbstractException {
         Comments commentObj = this.commentDAO.get(object.getId());
-        return BaseResponseModel.<Comments>builder().response(commentObj).build();
+        return BaseResponseModel.<Comments>builder().response(commentObj).code(200).build();
     }
 }
