@@ -12,18 +12,16 @@ import com.nexflare.testhiber.responseModel.BaseResponseModel;
 import com.nexflare.testhiber.responseModel.Response;
 import com.nexflare.testhiber.service.AuthenticatedBaseHandler;
 import jakarta.servlet.http.HttpServletRequest;
-
-import javax.xml.stream.events.Comment;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class DeleteUserService extends AuthenticatedBaseHandler<GetByIdRequestObject> {
 
-    private AbstractDAL<Comments, UUID> commentsDAL;
-    private AbstractDAL<Blog,UUID> blogDAL;
+    private final AbstractDAL<Comments, UUID> commentsDAL;
+    private final AbstractDAL<Blog,UUID> blogDAL;
 
-    private AbstractDAL<Likes, UUID> likesDAL;
+    private final AbstractDAL<Likes, UUID> likesDAL;
 
     public DeleteUserService(AbstractDAL<User, UUID> userDao,
                              HttpServletRequest request,
@@ -39,9 +37,6 @@ public class DeleteUserService extends AuthenticatedBaseHandler<GetByIdRequestOb
     @Override
     protected Response handleRequest(GetByIdRequestObject object) throws AbstractException {
         User user = this.getUserFromSession();
-        if(!user.getId().equals(object.getId())) {
-            return BaseResponseModel.builder().code(403).errorMessage("Unauthorized request").build();
-        }
         Comments commentsObj = Comments.builder().user(user).build();
         Map<String, Object> map =new  ObjectToMap<Comments>().getMap(commentsObj);
         List<Comments> commentsList = commentsDAL.getElementsByQuery(map);
@@ -56,8 +51,6 @@ public class DeleteUserService extends AuthenticatedBaseHandler<GetByIdRequestOb
         this.getRequest().setAttribute("USER_OBJECT", null);
         User userObj = User.builder().id(object.getId()).build();
         this.userDao.delete(userObj);
-
-
         return BaseResponseModel.builder().code(200).response("User deleted successfully").build();
     }
 }

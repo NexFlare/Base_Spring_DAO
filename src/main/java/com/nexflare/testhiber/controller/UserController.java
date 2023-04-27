@@ -69,8 +69,9 @@ public class UserController {
     }
 
     @DeleteMapping("/")
-    public Response deleteUser(@RequestBody GetByIdRequestObject obj, UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, CommentDAL commentDAL, LikesDAL likesDAL) {
+    public Response deleteUser( UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, CommentDAL commentDAL, LikesDAL likesDAL) {
         BaseHandler<GetByIdRequestObject> handler = new DeleteUserService(userDAL, request, blogDAL, commentDAL, likesDAL);
+        GetByIdRequestObject obj = new GetByIdRequestObject();
         return handler.handle(obj);
     }
 
