@@ -3,6 +3,7 @@ package com.nexflare.testhiber.dal;
 import com.nexflare.testhiber.exceptions.DataNotFoundException;
 import com.nexflare.testhiber.exceptions.DatabaseException;
 import com.nexflare.testhiber.pojo.AbstractDO;
+import com.nexflare.testhiber.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,7 +18,7 @@ public abstract class AbstractDAL<K extends AbstractDO, T> implements IDataRetri
 
     private static final Logger log = Logger.getAnonymousLogger();
     private static final ThreadLocal<Session> sessionThread = new ThreadLocal<>();
-    private static final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     public static Session getSession() {
         if(sessionThread.get() == null) {
@@ -62,7 +63,11 @@ public abstract class AbstractDAL<K extends AbstractDO, T> implements IDataRetri
     @Override
     public List<K> getAll() throws DataNotFoundException {
         try{
-            return _getAll();
+            begin();
+            List<K> list = _getAll();
+            commit();
+            close();
+            return list;
         } catch(Exception e) {
             log.log(Level.SEVERE, e.getMessage());
             throw new DatabaseException(e.getMessage());

@@ -6,7 +6,6 @@ import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.helper.ObjectToMap;
 import com.nexflare.testhiber.mapper.IDOToResponseMapper;
 import com.nexflare.testhiber.pojo.Blog;
-import com.nexflare.testhiber.pojo.Likes;
 import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.GetByIdRequestObject;
 import com.nexflare.testhiber.responseModel.BaseResponseModel;
@@ -15,7 +14,6 @@ import com.nexflare.testhiber.responseModel.Response;
 import com.nexflare.testhiber.service.AuthenticatedBaseHandler;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;

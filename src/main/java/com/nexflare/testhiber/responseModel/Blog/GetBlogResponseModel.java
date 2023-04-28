@@ -44,5 +44,6 @@ public class GetBlogResponseModel extends AbstractResponseModel {
         private String lastName;
         private UUID commentId;
         private String comment;
+        private UUID userId;
     }
 }

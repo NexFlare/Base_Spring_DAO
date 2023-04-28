@@ -45,7 +45,7 @@ public class CommentController {
         return commentHandler.handle(obj);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/")
     public Response deleteComment(@RequestBody GetByIdRequestObject obj, UserDAL userDAL, HttpServletRequest request,
                                   CommentDAL commentDAO) {
         BaseHandler<GetByIdRequestObject> handler = new DeleteCommentService(userDAL,request,commentDAO);

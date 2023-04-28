@@ -41,8 +41,9 @@ public class GetBlogService extends AuthenticatedBaseHandler<GetBlogRequestObjec
         Map<String, Object> map = mapper.getMap(object);
         User user = this.getUserFromSession();
         if(user.getUserType() != UserType.ADMIN) map.put("blogStatus", BlogStatus.APPROVED);
+        if(map.containsKey("page")) map.remove("page");
 //        List<Blog> blogs = this.blogDao.getElementsByQuery(map);
-        List<Blog> blogs = this.blogDao.searchBlogElements(map);
+        List<Blog> blogs = this.blogDao.searchBlogElements(map, 1);
         List<GetBlogsResponseModel.BlogItem> blogsResponseList = new ArrayList<>();
         for(int i =0;i<blogs.size();i++) {
             blogsResponseList.add(responseMapper.map(blogs.get(i)));

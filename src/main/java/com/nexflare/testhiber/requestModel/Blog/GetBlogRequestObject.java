@@ -16,4 +16,5 @@ public class GetBlogRequestObject extends AbstractRequestObject {
     private String location;
     private BlogType type;
     private User user;
+    private int page;
 }

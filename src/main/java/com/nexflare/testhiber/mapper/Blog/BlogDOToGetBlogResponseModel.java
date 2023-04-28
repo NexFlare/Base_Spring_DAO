@@ -31,6 +31,7 @@ public class BlogDOToGetBlogResponseModel implements IDOToResponseMapper<Blog, G
                     .comment(comment.getComment())
                     .firstName(commentUser.getFirstName())
                     .lastName(commentUser.getLastName())
+                    .userId(commentUser.getId())
                     .build();
             commentDetailList.add(commentDetail);
         }

@@ -3,6 +3,7 @@ package com.nexflare.testhiber.controller;
 
 import com.nexflare.testhiber.dal.BlogDAL;
 import com.nexflare.testhiber.dal.LikesDAL;
+import com.nexflare.testhiber.dal.NotificationDAL;
 import com.nexflare.testhiber.dal.UserDAL;
 import com.nexflare.testhiber.enums.BlogStatus;
 import com.nexflare.testhiber.enums.BlogType;
@@ -38,11 +39,13 @@ public class BlogController {
     public Response getBlogDetail(@RequestParam(required = false) UUID blogId,
                                   @RequestParam(required = false) BlogType type,
                                   @RequestParam(required = false) String location,
+                                  @RequestParam(required = false, defaultValue = "1") int pageNumber,
                                   UserDAL userDAL, HttpServletRequest request,
                                   BlogDAL blogDAL, BlogDOToResponseBlogItemMapper responseMapper) {
         GetBlogRequestObject requestObject = GetBlogRequestObject.builder()
                 .type(type).blogId(blogId)
                 .location(location)
+                .page(pageNumber)
                 .build();
         BaseHandler<GetBlogRequestObject> getBlogService = new GetBlogService(userDAL,request,blogDAL, responseMapper);
         return getBlogService.handle(requestObject);
@@ -51,12 +54,12 @@ public class BlogController {
 
     @PutMapping("/updatestatus")
     public Response updateBlogStatus(@RequestBody ActionBlogRequestObject obj, UserDAL userDAL,
-                                     HttpServletRequest request, BlogDAL blogDal) {
-        BaseHandler<ActionBlogRequestObject> handler = new ActionBlogService(userDAL,request,blogDal);
+                                     HttpServletRequest request, BlogDAL blogDal, NotificationDAL notificationDAL) {
+        BaseHandler<ActionBlogRequestObject> handler = new ActionBlogService(userDAL,request,blogDal, notificationDAL);
         return handler.handle(obj);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/")
     public Response updateBlog(@RequestBody UpdateBlogRequestObject obj, UserDAL userDAL, HttpServletRequest reqeust, BlogDAL blogDAL, UpdateBlogRequestToBlogMapper mapper) {
         BaseHandler<UpdateBlogRequestObject> handler = new UpdateBlogService(userDAL, reqeust, blogDAL, mapper);
         return handler.handle(obj);

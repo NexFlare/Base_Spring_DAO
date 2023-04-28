@@ -46,7 +46,7 @@ public class BlogDAL extends AbstractDAL<Blog, UUID> {
         return blogs;
     }
 
-    public List<Blog> searchBlogElements(Map<String, Object> map) {
+    public List<Blog> searchBlogElements(Map<String, Object> map, int pageNumber) {
         StringBuilder sb = new StringBuilder("from Blog where ");
         String location = null;
         if(map.containsKey("location")) {

@@ -11,6 +11,7 @@ import com.nexflare.testhiber.responseModel.BaseResponseModel;
 import com.nexflare.testhiber.responseModel.Response;
 import com.nexflare.testhiber.service.BaseHandler;
 import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
 
@@ -32,11 +33,16 @@ public class CreateUserService extends BaseHandler<CreateNewUserRequestObject> {
             throw new IllegalArgumentException("Mandatory fields are missing");
         }
 
+        if(object.getFirstName().length() >255) throw new IllegalArgumentException("Fist name cannot be greater that 255 in length");
+        if(object.getLastName().length() > 255) throw new IllegalArgumentException("Last name cannot be greater that 255 in length");
+        if(object.getPassword().length() > 255) throw new IllegalArgumentException("Password cannot be greater than 255 in length");
+//        if(new EmailValidator(object.getEmail()).isValid)
+
         User userObj = mapper.map(object);
         try{
             this.getUserDao().add(userObj);
         } catch(AbstractException e) {
-            throw new DatabaseException("User already exists");
+            throw new DatabaseException(e.getMessage());
         } catch(Exception e) {
             throw new DatabaseException("Please enter valid details");
         }

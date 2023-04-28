@@ -3,10 +3,7 @@ package com.nexflare.testhiber.service.User;
 import com.nexflare.testhiber.dal.AbstractDAL;
 import com.nexflare.testhiber.exceptions.AbstractException;
 import com.nexflare.testhiber.helper.ObjectToMap;
-import com.nexflare.testhiber.pojo.Blog;
-import com.nexflare.testhiber.pojo.Comments;
-import com.nexflare.testhiber.pojo.Likes;
-import com.nexflare.testhiber.pojo.User;
+import com.nexflare.testhiber.pojo.*;
 import com.nexflare.testhiber.requestModel.GetByIdRequestObject;
 import com.nexflare.testhiber.responseModel.BaseResponseModel;
 import com.nexflare.testhiber.responseModel.Response;
@@ -23,15 +20,19 @@ public class DeleteUserService extends AuthenticatedBaseHandler<GetByIdRequestOb
 
     private final AbstractDAL<Likes, UUID> likesDAL;
 
+    private final AbstractDAL<Notification, UUID> notificationDAL;
+
     public DeleteUserService(AbstractDAL<User, UUID> userDao,
                              HttpServletRequest request,
                              AbstractDAL<Blog,UUID> blogDAL,
                              AbstractDAL<Comments, UUID> commentsDAL,
-                             AbstractDAL<Likes, UUID> likesDAL) {
+                             AbstractDAL<Likes, UUID> likesDAL,
+                             AbstractDAL<Notification, UUID> notificationDAL) {
         super(userDao, request);
         this.commentsDAL = commentsDAL;
         this.blogDAL = blogDAL;
         this.likesDAL = likesDAL;
+        this.notificationDAL = notificationDAL;
     }
 
     @Override
@@ -47,9 +48,13 @@ public class DeleteUserService extends AuthenticatedBaseHandler<GetByIdRequestOb
         map = new ObjectToMap<Likes>().getMap(likeObj);
         List<Likes> likesList = likesDAL.getElementsByQuery(map);
         likesDAL.bulkDelete(likesList);
+        Notification notificationObj = Notification.builder().user(user).build();
+        map = new ObjectToMap<Likes>().getMap(likeObj);
+        List<Notification> notifactionList = notificationDAL.getElementsByQuery(map);
+        notificationDAL.bulkDelete(notifactionList);
         // to log out the user
         this.getRequest().setAttribute("USER_OBJECT", null);
-        User userObj = User.builder().id(object.getId()).build();
+        User userObj = User.builder().id(user.getId()).build();
         this.userDao.delete(userObj);
         return BaseResponseModel.builder().code(200).response("User deleted successfully").build();
     }

@@ -1,9 +1,6 @@
 package com.nexflare.testhiber.controller;
 
-import com.nexflare.testhiber.dal.BlogDAL;
-import com.nexflare.testhiber.dal.CommentDAL;
-import com.nexflare.testhiber.dal.LikesDAL;
-import com.nexflare.testhiber.dal.UserDAL;
+import com.nexflare.testhiber.dal.*;
 import com.nexflare.testhiber.mapper.User.CreateUserRequestToUserMapper;
 import com.nexflare.testhiber.mapper.User.GetUserRequestToUserMapper;
 import com.nexflare.testhiber.mapper.User.UserDOToUserResponseMapper;
@@ -69,8 +66,8 @@ public class UserController {
     }
 
     @DeleteMapping("/")
-    public Response deleteUser( UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, CommentDAL commentDAL, LikesDAL likesDAL) {
-        BaseHandler<GetByIdRequestObject> handler = new DeleteUserService(userDAL, request, blogDAL, commentDAL, likesDAL);
+    public Response deleteUser(UserDAL userDAL, HttpServletRequest request, BlogDAL blogDAL, CommentDAL commentDAL, LikesDAL likesDAL, NotificationDAL notificationDAL) {
+        BaseHandler<GetByIdRequestObject> handler = new DeleteUserService(userDAL, request, blogDAL, commentDAL, likesDAL, notificationDAL);
         GetByIdRequestObject obj = new GetByIdRequestObject();
         return handler.handle(obj);
     }

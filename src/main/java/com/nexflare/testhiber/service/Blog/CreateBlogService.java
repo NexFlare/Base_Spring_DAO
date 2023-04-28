@@ -9,6 +9,7 @@ import com.nexflare.testhiber.pojo.User;
 import com.nexflare.testhiber.requestModel.Blog.CreateBlogRequestObject;
 import com.nexflare.testhiber.responseModel.BaseResponseModel;
 import com.nexflare.testhiber.responseModel.Response;
+import com.nexflare.testhiber.service.AuthenticatedBaseHandler;
 import com.nexflare.testhiber.service.BaseHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 @Service
 @Configurable
-public class CreateBlogService extends BaseHandler<CreateBlogRequestObject> {
+public class CreateBlogService extends AuthenticatedBaseHandler<CreateBlogRequestObject> {
 
     private final AbstractDAL<Blog, UUID> blogDao;
     private final IRequestToDOMapper<CreateBlogRequestObject, Blog> mapper;
@@ -33,20 +34,13 @@ public class CreateBlogService extends BaseHandler<CreateBlogRequestObject> {
     @Override
     protected Response handleRequest(CreateBlogRequestObject object) {
         Blog blog = this.mapper.map(object);
-        if(validateIsUserLoggedIn()) {
-            User userObj = this.getUserFromSession();
-            if(object.getUser().getId() == null || !userObj.getId().equals(object.getUser().getId())){
-                return BaseResponseModel.<Blog>builder().errorMessage("User not authorized").code(401).build();
-            }
-            blog.setBlogStatus(BlogStatus.PENDING);
-            this.blogDao.add(blog);
-            return BaseResponseModel.<Blog>builder().response(blog).code(200).build();
-        } else {
-            return BaseResponseModel.
-                    <Blog>builder()
-                    .errorMessage("User not authenticated")
-                    .code(401).build();
+        User userObj = this.getUserFromSession();
+        if(object.getUser().getId() == null || !userObj.getId().equals(object.getUser().getId())){
+            return BaseResponseModel.<Blog>builder().errorMessage("User not authorized").code(403).build();
         }
+        blog.setBlogStatus(BlogStatus.PENDING);
+        this.blogDao.add(blog);
+        return BaseResponseModel.<Blog>builder().response(blog).code(200).build();
     }
 
 }

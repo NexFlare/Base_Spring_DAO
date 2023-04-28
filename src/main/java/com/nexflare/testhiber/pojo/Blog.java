@@ -24,6 +24,7 @@ public class Blog extends AbstractDO{
     @Column(name = "blogid")
     private UUID blogId;
 
+    @Column(length = 500)
     private String title;
 
     @Column(length = 10000)
