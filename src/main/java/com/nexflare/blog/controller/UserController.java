@@ -28,7 +28,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<User> getUsers(UserDAL dao) {
         return dao.getAll();
     }
@@ -45,7 +45,7 @@ public class UserController {
         return userRequestService.handle(new GetByIdRequestObject());
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public Response addUser(@RequestBody CreateNewUserRequestObject user, UserDAL userDAL, HttpServletRequest request, CreateUserRequestToUserMapper mapper) {
         BaseHandler<CreateNewUserRequestObject> createNewUserService = new CreateUserService(userDAL, request,mapper);
         return createNewUserService.handle(user);
